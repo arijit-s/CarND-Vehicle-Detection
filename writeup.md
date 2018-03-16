@@ -15,7 +15,7 @@ The goals / steps of this project are the following:
 * Estimate a bounding box for vehicles detected.
 
 [//]: # (Image References)
-[image1]: ./examples/car_not_car.jpg
+[image1]: ./examples/car_not_car.png
 [image2]: ./examples/car_hog.jpg
 [image2a]: ./examples/non_car_hog.jpg
 [image3]: ./examples/sliding_windows.jpg
@@ -61,7 +61,9 @@ First I started with orientation 9, pixels per cell (8,8). Although the HOG feat
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-Along with HOG feature, I extracted color feature and histogram of each color channel from the car and non car images. With all these features I trained a linear SVM. I changed the C parameter to 0.001 to get better accuracy.
+Along with HOG feature, I extracted color feature and histogram of each color channel from the car and non car images. With all these features I trained a linear SVM first. But although I was getting 99% accuracy, the model was giving lots of false positive.
+
+Later I switched to non linear SVM(kernel `rbf`). After that the false positive went away significantly.
 I split the whole image dataset into training and test sample, putting 20% of the images in the test samples.
 Finally I was able to achieve 99.3% Test accuracy.
 
@@ -73,9 +75,9 @@ I decided to search random window positions at random scales all over the image 
 
 I took 3 sliding window frame size for different position on the frame. As the cars will look larger the more it closer and smaller the more further, so I took the following three window sizes:
 
-(192, 96) with overlappting of 75% along X axis and 50% along with Y axis. These sliding window will be drawn on the image where Y axis is between (336 and 656).
+(192, 192) with overlappting of 75% along X axis and 50% along with Y axis. These sliding window will be drawn on the image where Y axis is between (336 and 656).
 
-(128, 64) with overlappting of 75% along X axis and 50% along with Y axis. These sliding window will be drawn on the image where Y axis is between (326 and 550).
+(128, 128) with overlappting of 75% along X axis and 50% along with Y axis. These sliding window will be drawn on the image where Y axis is between (326 and 550).
 
 (64,  64) with overlappting of 75% along X axis and 75% along with Y axis. These sliding window will be drawn on the image where Y axis is between (372 and 500).
 
